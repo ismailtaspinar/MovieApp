@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="data"
+            type="com.example.movieapp.data.model.Data" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="136dp">
+
+        <ImageView
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginVertical="16dp"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/moonrise_kingdom"
+            android:id="@+id/image"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="188dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="8dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@{data.title}"
+            android:textSize="15dp"
+            app:layout_constraintLeft_toRightOf="@id/image"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/text_black"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="188dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/text_gray"
+            android:textSize="13dp"
+            android:text="@{data.overview}"
+            app:layout_constraintLeft_toRightOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="62dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="134dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="17dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@{data.release_date}"
+            android:textColor="@color/text_gray"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/materialDivider"
+            app:layout_constraintLeft_toRightOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/description" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:id="@+id/arrow_icon"
+            app:layout_constraintTop_toTopOf="@id/description"
+            app:layout_constraintBottom_toBottomOf="@id/description"
+            app:layout_constraintLeft_toRightOf="@id/description"
+            android:layout_marginLeft="19dp"
+            android:src="@drawable/arrow_icon"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/materialDivider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerColor="@color/light_gray"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</layout>
