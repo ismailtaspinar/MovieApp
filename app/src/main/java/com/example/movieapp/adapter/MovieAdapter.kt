@@ -30,6 +30,8 @@ class MovieAdapter(private val movieList : List<Data>,private val viewModel: Hom
         holder.bind(movieList[position])
     }
 
+
+
     class MovieHolder(val movieBinding: MovieItemBinding,val navController: NavController,
                         val viewModel: HomeViewModel) : RecyclerView.ViewHolder(movieBinding.root) {
 
@@ -37,7 +39,10 @@ class MovieAdapter(private val movieList : List<Data>,private val viewModel: Hom
             movieBinding.apply {
                 data = movieItem
             }
-            loadImage(movieItem.image!!)
+            movieItem.image?.let {
+                loadImage(it)
+            }
+
             movieBinding.root.setOnClickListener {
                 viewModel.fetchDetails(movieItem.id!!)
                 goToDetails()
