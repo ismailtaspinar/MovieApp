@@ -1,6 +1,5 @@
 package com.example.movieapp.ui
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,9 @@ import com.example.movieapp.domain.use_case.FetchDetailsUseCase
 import com.example.movieapp.domain.use_case.FetchMovieSliderUseCase
 import com.example.movieapp.domain.use_case.FetchMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,16 +24,17 @@ class HomeViewModel @Inject constructor(private val fetchMovieUseCase: FetchMovi
 
 
 
-    private val _state = MutableStateFlow<Resource<Response>?>(null)
-    val state = _state.asStateFlow()
+    private val _state = MutableSharedFlow<Resource<Response>?>()
+    val state = _state.asSharedFlow()
 
-    private val _sliderState = MutableStateFlow<Resource<Response>?>(null)
-    val sliderState = _sliderState.asStateFlow()
+    private val _sliderState = MutableSharedFlow<Resource<Response>?>()
+    val sliderState = _sliderState.asSharedFlow()
 
     private val _detailState = MutableStateFlow<Resource<Movie>?>(null)
     val detailState = _detailState.asStateFlow()
 
     private val _pageNumber = MutableLiveData(1)
+    val pageNumber = _pageNumber
 
     private var _totalPage = 0
 

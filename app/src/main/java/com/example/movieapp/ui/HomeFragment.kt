@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.PagerAdapter
 import com.example.movieapp.adapter.MovieAdapter
 import com.example.movieapp.adapter.SliderAdapter
 import com.example.movieapp.common.Resource
@@ -21,6 +22,7 @@ import com.example.movieapp.data.model.Data
 import com.example.movieapp.data.model.Response
 import com.example.movieapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import me.relex.circleindicator.CircleIndicator
 
 
@@ -42,8 +44,10 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
 
-        viewModel.fetchMovie()
-        viewModel.fetchSlider()
+        if(movieList.isEmpty() && movieSliderList.isEmpty()){
+            viewModel.fetchMovie()
+            viewModel.fetchSlider()
+        }
 
         activity?.window?.apply {
             clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -56,6 +60,7 @@ class HomeFragment : Fragment() {
         binding.movieRecycler.layoutManager = mLayoutManager
         binding.movieRecycler.isNestedScrollingEnabled = false
         binding.movieRecycler.adapter = MovieAdapter(movieList,viewModel)
+        binding.viewpager.adapter = SliderAdapter(movieSliderList,viewModel)
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.state.collect{
@@ -116,7 +121,7 @@ class HomeFragment : Fragment() {
         })
 
         binding.refresh.setOnRefreshListener {
-            isLoading = true
+            binding.refresh.isRefreshing = true
             viewModel.resetPage()
             movieList.clear()
             movieSliderList.clear()
