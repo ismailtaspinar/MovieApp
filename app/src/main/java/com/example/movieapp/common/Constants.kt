@@ -1,8 +1,10 @@
 package com.example.movieapp.common
 
+import com.example.movieapp.BuildConfig
+
 object Constants {
     const val BASE_URL = "https://api.themoviedb.org/3/"
-    const val API_KEY = "dadfb69121649170351f057cf3b2fcd9"
+    const val API_KEY = BuildConfig.API_KEY
     const val SLIDER = "movie/now_playing"
     const val LIST = "movie/upcoming"
     const val DETAILS = "movie/{movie_id}"
