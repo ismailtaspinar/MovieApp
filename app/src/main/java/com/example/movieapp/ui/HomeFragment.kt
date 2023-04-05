@@ -131,6 +131,16 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.refresh.isEnabled = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.refresh.isEnabled = true
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
