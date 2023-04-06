@@ -11,10 +11,9 @@ import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.PagerAdapter
 import com.example.movieapp.adapter.MovieAdapter
 import com.example.movieapp.adapter.SliderAdapter
 import com.example.movieapp.common.Resource
@@ -22,7 +21,6 @@ import com.example.movieapp.data.model.Data
 import com.example.movieapp.data.model.Response
 import com.example.movieapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import me.relex.circleindicator.CircleIndicator
 
 
@@ -59,8 +57,13 @@ class HomeFragment : Fragment() {
         mLayoutManager = LinearLayoutManager(context)
         binding.movieRecycler.layoutManager = mLayoutManager
         binding.movieRecycler.isNestedScrollingEnabled = false
+        binding.movieRecycler.setHasFixedSize(true)
+        binding.movieRecycler.addItemDecoration(
+            DividerItemDecoration(context,LinearLayoutManager.VERTICAL)
+        )
         binding.movieRecycler.adapter = MovieAdapter(movieList,viewModel)
         binding.viewpager.adapter = SliderAdapter(movieSliderList,viewModel)
+        binding.indicator.setViewPager(binding.viewpager)
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.state.collect{
@@ -120,6 +123,7 @@ class HomeFragment : Fragment() {
             }
         })
 
+
         binding.refresh.setOnRefreshListener {
             binding.refresh.isRefreshing = true
             viewModel.resetPage()
@@ -128,6 +132,7 @@ class HomeFragment : Fragment() {
             viewModel.fetchSlider()
             viewModel.fetchMovie()
         }
+
         return binding.root
     }
 
